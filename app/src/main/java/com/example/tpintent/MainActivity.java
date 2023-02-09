@@ -1,12 +1,17 @@
 package com.example.tpintent;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     EditText editText;
@@ -40,30 +45,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.button3:
                 // navigate to Google.com
-                intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(android.net.Uri.parse("http://www.google.com"));
+                // intent = new Intent(Intent.ACTION_VIEW);
+                // intent.setData(android.net.Uri.parse("http://www.google.com"));
+                // startActivity(intent);
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+                // with search
+                //intent = new Intent(Intent.ACTION_VIEW, android.net.Uri.parse("http://www.google.com/search?q=" + editText.getText().toString()));
                 startActivity(intent);
                 break;
             case R.id.button4:
                 // Application Settings
-                intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                intent.setData(android.net.Uri.parse("package:" + getPackageName()));
+                intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                intent.setData(Uri.parse("package:" + getPackageName()));
                 startActivity(intent);
                 break;
             case R.id.button5:
                 // make a call
                 intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(android.net.Uri.parse("tel:123456789"));
+                intent.setData(Uri.parse("tel:123456789"));
+                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Permission not granted", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 startActivity(intent);
                 break;
             case R.id.button6:
                 // send an email
                 intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"aaaa", "bbbb"});
-                intent.putExtra(Intent.EXTRA_SUBJECT, "subject");
-                intent.putExtra(Intent.EXTRA_TEXT, "text");
-                startActivity(intent);
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"abbassimelek@gmail.com", "test@gmail.com"});
+                intent.putExtra(Intent.EXTRA_SUBJECT, "From TPIntent");
+                intent.putExtra(Intent.EXTRA_TEXT, "Hello World!");
+                startActivity(Intent.createChooser(intent, "Send Email"));
                 break;
         }
     }
