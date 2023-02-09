@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">TPIntent</string>
+    <string name="intent_explicit">Intent Explicit</string>
+    <string name="intent_explicit_with_data_transfer">Intent Explicit with Data Transfer</string>
+    <string name="www_google_com">www.google.com</string>
+    <string name="application_settings">Application Settings</string>
+    <string name="phone_call">Phone Call</string>
+    <string name="send_email">Send Email</string>
+    <string name="good_morning_activities">Good Morning Activities</string>
+    <string name="enter_parameter">Enter Parameter</string>
+    <string name="explicit_intent_activity">Explicit Intent Activity</string>
+    <string name="explicit_intent_data_activity">Data</string>
+</resources>
